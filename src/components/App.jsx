@@ -7,6 +7,7 @@ import { GlobalStyle } from './GlobalStyle';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 import { Button } from './Button/Button';
 import { Loader } from './Loader/Loader';
+import { Modal } from './Modal/Modal';
 
 export class App extends Component {
   state = {
@@ -16,11 +17,13 @@ export class App extends Component {
     totalImg: null,
     isLoading: false,
     error: null,
+    showModal: false,
+    modalUrl: '',
   };
 
   handleSubmit = value => {
     this.setState({
-      value,
+      value: `${Date.now()}/${value}`,
       page: 1,
       images: [],
       error: null,
@@ -31,8 +34,14 @@ export class App extends Component {
     const { value, page } = this.state;
     if (prevState.value !== value || prevState.page !== page) {
       this.setState({ isLoading: true });
+      const valueArr = value.split('/');
+      const requestValue = valueArr[1];
       try {
-        const { totalHits, hits } = await getSearch(value, page);
+        const { totalHits, hits } = await getSearch(requestValue, page);
+        if (hits.length === 0) {
+          toast.error('Sorry, nothing found');
+          return;
+        }
         this.setState(prevState => ({
           images: [...prevState.images, ...hits],
           totalImg: totalHits,
@@ -40,7 +49,6 @@ export class App extends Component {
       } catch (error) {
         this.setState({ error: toast.error('Oops! Something went wrong...') });
       } finally {
-        console.log(Toaster);
         this.setState({ isLoading: false });
       }
     }
@@ -52,22 +60,33 @@ export class App extends Component {
     }));
   };
 
+  showModal = modalUrl => {
+    this.setState({
+      modalUrl,
+      showModal: true,
+    });
+  };
+
+  closeModal = () => {
+    this.setState({ showModal: false });
+  };
+
   render() {
-    const { isLoading, totalImg, images } = this.state;
+    const { isLoading, totalImg, images, modalUrl, showModal } = this.state;
 
     return (
       <Layout>
         <Searchbar onSubmit={this.handleSubmit} />
         {isLoading && <Loader />}
-        {images.length === 0 && toast.error('Sorry, nothing found')}
-
-        {images.length !== 0 && <ImageGallery images={images} />}
-
+        {images.length !== 0 && (
+          <ImageGallery images={images} onClick={this.showModal} />
+        )}
         {images.length > 0 && images.length < totalImg && (
           <Button onClick={this.onMore} />
         )}
+        {showModal && <Modal url={modalUrl} onClose={this.closeModal} />}
         <GlobalStyle />
-        <Toaster position="top-right" />
+        <Toaster />
       </Layout>
     );
   }

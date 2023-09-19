@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import { Wraper, SearchForm, Btn, BtnLabel, Input } from './Searchbar.styled';
 import toast from 'react-hot-toast';
+import { ImSearch } from 'react-icons/im';
 
 export class Searchbar extends Component {
   state = {
@@ -28,7 +29,7 @@ export class Searchbar extends Component {
       <Wraper>
         <SearchForm onSubmit={this.handleOnSubmit}>
           <Btn type="submit">
-            <BtnLabel>Search</BtnLabel>
+            <ImSearch />
           </Btn>
 
           <Input

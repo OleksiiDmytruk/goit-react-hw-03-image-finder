@@ -1,16 +1,11 @@
 import styled from 'styled-components';
 
 export const Wraper = styled.header`
-  top: 0;
-  left: 0;
-  position: sticky;
-  z-index: 1100;
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 64px;
-  padding-right: 24px;
-  padding-left: 24px;
+  width: 100%;
   padding-top: 12px;
   padding-bottom: 12px;
   color: #fff;
@@ -22,7 +17,7 @@ export const Wraper = styled.header`
 export const SearchForm = styled.form`
   display: flex;
   align-items: center;
-  width: 100%;
+  width: 60%;
   background-color: #fff;
   border-radius: 3px;
   overflow: hidden;
@@ -61,7 +56,7 @@ export const BtnLabel = styled.span`
 
 export const Input = styled.input`
   display: inline-block;
-  width: 1000px;
+  width: 600px;
   font: inherit;
   font-size: 20px;
   border: none;

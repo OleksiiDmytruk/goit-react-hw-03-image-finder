@@ -1,9 +1,9 @@
 import { Item, Img } from './ImageGalleryItem.styled';
 
-export const ImageGalleryItem = ({ url }) => {
+export const ImageGalleryItem = ({ url, modalUrl, onClick }) => {
   return (
     <Item>
-      <Img src={url} />
+      <Img src={url} onClick={() => onClick(modalUrl)} />
     </Item>
   );
 };
