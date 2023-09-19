@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { Wraper, SearchForm, Btn, BtnLabel, Input } from './Searchbar.styled';
+import { Wraper, SearchForm, Btn, Input } from './Searchbar.styled';
 import toast from 'react-hot-toast';
 import { ImSearch } from 'react-icons/im';
 
